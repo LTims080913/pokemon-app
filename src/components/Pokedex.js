@@ -1,39 +1,28 @@
-import React, {useContext} from 'react'
-import {PokemonContext} from '../context/PokemonContext'
+  
+import React, { useContext } from 'react';
+import { PokemonContext } from '../context/PokemonContext';
+import { listPokemons } from './listPokemons';
 
+const Pokedex = () => {
+  const { capturedPokemons, release } = useContext(PokemonContext);
 
-const CapturedPokemons = () => {
-    const {
-        pokemons, 
-        setPokemons, 
-        capturedPokemons, 
-        setCapturedPokemons
-    } = useContext(PokemonContext)
+  return (
+    <div className="pokedex">
+      <h2>Pokedex</h2>
 
-    const releasePokemon = (releasedPokemon) =>
-        capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
-
-    const release = (pokemon) => () => {
-        //update captured Pokemon list
-        setCapturedPokemons(releasePokemon(pokemon));
-        //update available Pokemon list
-        setPokemons([...pokemons, pokemon]);
-    };
-
-    return(
-        <div className='pokedex'>
-            <h2>Captured Pokemon</h2>
-
-            {capturedPokemons.map((pokemon) =>
-            <div key={`${pokemon.id}-${pokemon.name}`}>
-                <div>
-                    <span>{pokemon.name}</span>
-                    <button onClick={release(pokemon)}>-</button> 
-                </div>
-            </div>)}
-        </div>
-    )
+      <table>
+        <tr>
+          <th>Pokemon</th>
+          <th>Release</th>
+        </tr>
+        {listPokemons({
+          pokemons: capturedPokemons,
+          onClick: release,
+          buttonLabel: '-'
+        })}
+      </table>
+    </div>
+  )
 }
 
-
-export default CapturedPokemons;
+export default Pokedex;

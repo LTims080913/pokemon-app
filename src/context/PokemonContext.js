@@ -1,29 +1,32 @@
-import React, {createContext, useState} from 'react';
+import React, { createContext } from 'react';
+import { usePokemonReducer } from '../reducer/reducer';
+import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS } from '../actions/actions';
 
-export const PokemonContext = createContext();
+const PokemonContext = createContext();
 
+const PokemonProvider = (props) => {
+  const [state, dispatch] = usePokemonReducer();
+  const { pokemons, capturedPokemons } = state;
 
-export const PokemonProvider = (props) => {
-    const [pokemons, setPokemons] = useState([
-        {id: 1, name: 'Bulbasaur'}, 
-        {id: 2, name: 'Charmander'}, 
-        {id: 3, name: 'Squirtle'}
-    ]);
+  const capture = (pokemon) => () => dispatch({ type: CAPTURE, pokemon });
+  const release = (pokemon) => () => dispatch({ type: RELEASE, pokemon });
+  const addPokemon = (pokemon) => dispatch({ type: ADD_POKEMON, pokemon });
+  const addPokemons = (pokemons) => dispatch({ type: ADD_POKEMONS, pokemons });
 
-    const [capturedPokemons, setCapturedPokemons] = useState([]);
+  const providerValue = {
+    pokemons,
+    capturedPokemons,
+    capture,
+    release,
+    addPokemon,
+    addPokemons
+  };
 
-    //values of state that the other components will need
-    const providerValue = {
-        pokemons, 
-        setPokemons, 
-        capturedPokemons, 
-        setCapturedPokemons
-    };
+  return (
+    <PokemonContext.Provider value={providerValue}>
+      {props.children}
+    </PokemonContext.Provider>
+  )
+};
 
-
-    return (
-        <PokemonContext.Provider value={providerValue}>
-             {props.children}
-        </PokemonContext.Provider>
-    )
-}
+export { PokemonContext, PokemonProvider };
