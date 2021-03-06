@@ -1,11 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {useContext} from 'react';
+import {PokemonContext} from './context/PokemonContext'
 
 //components
 import PokemonList from './components/PokemonList'
-import CapturedPokemons from './components/CapturedPokemons'
+import Pokedex from './components/Pokedex'
 import { PokemonProvider } from './context/PokemonContext';
+
+
 
 function App() {
   return (
@@ -14,7 +17,7 @@ function App() {
         <h1>Pokemon App coming soon!</h1>
         <p>....under construction....</p>
         <PokemonList/>
-        <CapturedPokemons/>
+        <Pokedex/>
       </div>
     </PokemonProvider>
   );

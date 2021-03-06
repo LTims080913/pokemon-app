@@ -10,10 +10,12 @@ const PokemonsList = () => {
     } = useContext(PokemonContext);
 
     const removePokemonFromList = (removedPokemon) => 
-    pokemons.filter(pokemon => pokemon !== removedPokemon);
+    pokemons.filter((pokemon) => pokemon !== removedPokemon);
 
-    const capture = (pokemon) => () => {
+    const capture = (pokemon) => () => { 
+        //update captured Pokemon list
         setCapturedPokemons([...capturedPokemons, pokemon]);
+        //update available Pokemon list
         setPokemons(removePokemonFromList(pokemon));
     };
 

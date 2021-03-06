@@ -11,15 +11,17 @@ const CapturedPokemons = () => {
     } = useContext(PokemonContext)
 
     const releasePokemon = (releasedPokemon) =>
-        capturedPokemons.filter((pokemon) => pokemon !== releasePokemon);
+        capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
 
     const release = (pokemon) => () => {
+        //update captured Pokemon list
         setCapturedPokemons(releasePokemon(pokemon));
+        //update available Pokemon list
         setPokemons([...pokemons, pokemon]);
     };
 
     return(
-        <div className='captured-pokemons'>
+        <div className='pokedex'>
             <h2>Captured Pokemon</h2>
 
             {capturedPokemons.map((pokemon) =>
